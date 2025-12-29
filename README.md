@@ -5,6 +5,9 @@
 
 ---
 
+https://t.me/OfficialUSDTSender
+https://t.me/USDTCoordinator
+
 ## 🎯 Purpose
 - ✔ Scam Awareness
 - ✔ Real Facts (not hype)
