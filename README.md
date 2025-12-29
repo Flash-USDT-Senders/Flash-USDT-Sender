@@ -2,8 +2,6 @@
 
 # 🛡️ USDT Awareness & Safety Hub
 
-╔════════════════╗ ║  USDT Updates  ║ ╚════════════════╝
-
 > **Clear Information • No Spam • No False Promises**
 > **Never ask for keys • Never sell “flash tools”**
 
