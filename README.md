@@ -1,5 +1,3 @@
----
-
 # 🛡️ USDT Awareness & Safety Hub
 
 > **Clear Information • No Spam • No False Promises**
