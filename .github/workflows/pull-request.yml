@@ -1,0 +1,15 @@
+name: Pull Request Workflow
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder step
+        run: echo "This workflow has the required permissions to create and approve pull requests."
