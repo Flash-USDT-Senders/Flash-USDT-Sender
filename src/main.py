@@ -1,41 +1,62 @@
 import argparse
+import re
 
-def connect_to_ethereum():
-    """Connects to the Ethereum network."""
-    print("Connecting to Ethereum...")
-    # Placeholder for connection logic
-    pass
+# Keywords and patterns associated with scams
+SCAM_KEYWORDS = [
+    "flash usdt", "fast sender", "unconfirmed transfer", "disappearing usdt",
+    "bypass blockchain", "mirroring balance", "cloning balance", "activation fee",
+    "guaranteed profit", "private key", "seed phrase"
+]
 
-def get_balance(address):
-    """Gets the USDT balance of an address."""
-    print(f"Getting balance for {address}...")
-    # Placeholder for get balance logic
-    pass
+def analyze_text_risk(text):
+    """
+    Analyzes text for keywords and patterns associated with common crypto scams.
+    """
+    found_keywords = []
+    for keyword in SCAM_KEYWORDS:
+        if re.search(r'\b' + re.escape(keyword) + r'\b', text, re.IGNORECASE):
+            found_keywords.append(keyword)
+    return found_keywords
 
-def send_usdt(to_address, amount):
-    """Sends USDT to an address."""
-    print(f"Sending {amount} USDT to {to_address}...")
-    # Placeholder for send USDT logic
-    pass
+def generate_safety_report(text):
+    """
+    Generates a safety report based on the analysis of the provided text.
+    """
+    found_keywords = analyze_text_risk(text)
+
+    print("--- USDT Safety Guardian Report ---")
+    print(f"\nAnalyzing the following text: \"{text[:100]}...\"")
+
+    if not found_keywords:
+        print("\n✅ No direct scam-related keywords were found.")
+        print("However, always remain cautious and follow best practices.")
+    else:
+        print("\n🚨 WARNING: Potential scam-related language detected!")
+        print("The following keywords, commonly used in scams, were found:")
+        for keyword in found_keywords:
+            print(f"  - {keyword}")
+
+    print("\n--- 🛡️ Safety Checklist ---")
+    print("- [ ] Have you verified the identity of the person or service?")
+    print("- [ ] Are they making promises that sound too good to be true (e.g., guaranteed profits)?")
+    print("- [ ] Are they pressuring you to act quickly?")
+    print("- [ ] Are they asking for an 'activation fee' or other upfront payment?")
+    print("- [ ] MOST IMPORTANTLY: Have they asked for your private keys or seed phrase?")
+    print("\nNEVER share your private keys or seed phrase with anyone.")
+    print("\n--- End of Report ---")
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Flash USDT Sender")
-    subparsers = parser.add_subparsers(dest="command")
-
-    # Balance command
-    balance_parser = subparsers.add_parser("balance", help="Check USDT balance")
-    balance_parser.add_argument("address", type=str, help="Ethereum address")
-
-    # Send command
-    send_parser = subparsers.add_parser("send", help="Send USDT")
-    send_parser.add_argument("to_address", type=str, help="Recipient Ethereum address")
-    send_parser.add_argument("amount", type=float, help="Amount of USDT to send")
+    parser = argparse.ArgumentParser(
+        description="USDT Safety Guardian: Analyze text for common crypto scam language.",
+        epilog="Stay safe and protect your assets. Never share your private keys."
+    )
+    parser.add_argument(
+        "text",
+        type=str,
+        help="The text to analyze (e.g., a message, an advertisement, a website's text)."
+    )
 
     args = parser.parse_args()
 
-    if args.command == "balance":
-        get_balance(args.address)
-    elif args.command == "send":
-        send_usdt(args.to_address, args.amount)
-    else:
-        parser.print_help()
+    generate_safety_report(args.text)
