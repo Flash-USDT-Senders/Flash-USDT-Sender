@@ -8,19 +8,28 @@ on:
 jobs:
   scheduled-job:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Print a message
-        run: echo "This is a scheduled job running every 30 minutes."
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      # Future steps can be added here.
-      # For example, to checkout the repository:
-      # - uses: actions/checkout@v3
+      - name: Create logs directory
+        run: mkdir -p .logs
 
-      # It's a good practice to use secrets for sensitive information.
-      # For example, if you need to use an API token:
-      # - name: Use secret
-      #   env:
-      #     API_TOKEN: ${{ secrets.API_TOKEN }}
-      #   run: |
-      #     # Your script that uses the API token
-      #     echo "Using the API token securely."
+      - name: Get status and update log
+        run: |
+          echo "Last updated: $(date)" >> .logs/updates.txt
+          git status >> .logs/updates.txt
+          echo "" >> .logs/updates.txt
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit and push changes
+        run: |
+          git add .logs/updates.txt
+          git commit -m "Update repo status log" || echo "No changes to commit"
+          git push
